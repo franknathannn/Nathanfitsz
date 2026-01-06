@@ -27,7 +27,12 @@ export default function LoginPage() {
       setLoading(false);
     } else {
       toast.success('Identity Verified. Initializing Console...');
-      // Small delay for effect before redirecting
+      
+      // --- THE CRITICAL FIX ---
+      // 1. Force Next.js to recognize the new session cookie immediately
+      router.refresh(); 
+
+      // 2. Then redirect after the animation
       setTimeout(() => {
         router.push('/admin/dashboard');
       }, 800);
