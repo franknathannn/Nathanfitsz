@@ -22,20 +22,20 @@ export default function LoginPage() {
       password,
     });
 
+    // Inside handleLogin...
+
     if (error) {
       toast.error('Access Denied: Invalid Credentials');
       setLoading(false);
     } else {
       toast.success('Identity Verified. Initializing Console...');
       
-      // --- THE CRITICAL FIX ---
-      // 1. Force Next.js to recognize the new session cookie immediately
-      router.refresh(); 
-
-      // 2. Then redirect after the animation
+      // --- THE FIX ---
+      // Don't use router.push(). Use window.location.href.
+      // This forces a browser refresh, ensuring cookies are sent correctly.
       setTimeout(() => {
-        router.push('/admin/dashboard');
-      }, 800);
+        window.location.href = '/admin/dashboard';
+      }, 500);
     }
   };
 
